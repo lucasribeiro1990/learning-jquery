@@ -1,11 +1,13 @@
-.top-bar {
-	margin: 0 auto;
+body {
+	margin: 0;
+	padding: 0;
 }
 
-.menu {
+#top-bar {
+	width: 100%;
+	border-color: gray;
+}
+
+#menu-bar {
 	border: 1px solid black;
-}
-
-div {
-	
 }

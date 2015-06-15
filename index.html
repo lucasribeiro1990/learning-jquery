@@ -28,19 +28,19 @@
 			<div id="main-container">
 				<div id="HTML-container" class="code-container">
 						<span class="containerTitle">HTML</span>
-						<textarea>HTML Example</textarea>
+						<textarea id="html-area">HTML Example</textarea>
 				</div>
 				<div id="CSS-container" class="code-container">
 						<span class="containerTitle">CSS</span>
-						<textarea>CSS Example</textarea>
+						<textarea id="css-area">CSS Example</textarea>
 				</div>
 				<div id="JS-container" class="code-container">
 						<span class="containerTitle">JS</span>
-						<textarea>JS Example</textarea>
+						<textarea id="js-area">JS Example</textarea>
 				</div>
 				<div id="RESULT-container" class="code-container">
 						<span class="containerTitle">RESULT</span>
-						<iframe></iframe>
+						<iframe id="result-area"></iframe>
 				</div>
 			</div>
 		</div>
@@ -49,19 +49,16 @@
 			function setSizes() {
 				var windowHeight = $(window).height();
 				var topBarHeight = $("#top-bar").height();
-				var codeBlockHeight = windowHeight - topBarHeight -2;
-				
-				$(".code-container").height(codeBlockHeight+"px");
-				
+				var codeBlockHeight = (windowHeight - topBarHeight);
 				var showDivs = $(".code-container")
 					.filter(
 						function(){
 							return( $(this).css("display") != "none" );
 					}).length;
+				var codeBlockWidth = ((100 / showDivs)) + "%";
 				
-				var codeBlockWidth = ( (100/showDivs) + "%");
-				
-				$(".code-container").width(codeBlockWidth);
+				$(".code-container").height(codeBlockHeight + "px");
+				$(".code-container").width(codeBlockWidth + "%");
 			}
 			
 			setSizes();
@@ -74,6 +71,23 @@
 					setSizes();
 				}
 			);
+			
+			$("#run-button").click(
+				function () {
+					$('#result-area')
+						.contents()
+						.find('html')
+						.html("<style>" 
+							+ $('#css-area').val() 
+							+ "</style>" 
+							+ $("#html-area").val() );
+ 	 	 			$('#result-area')
+					   .contentWindow
+					   .eval( $('#js-area').val() );
+				}	
+			);
+			//var t = "window";
+			//alert( $(window).width() + " - " + $(window).height()) ;
 		</script>
 	</body>
 </html>
